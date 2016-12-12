@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录成功</title>
+</head>
+<body>
+<div>欢迎你：<span id="name"></span></div>
+<button id="loginOut">退出</button>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript">
+        var name = $.cookie('username2');
+        var password = $.cookie('password2');
+	     $.ajax({
+            url: "http://localhost/CodeIgniter/index.php/Blog/index",
+            type: "POST",
+            dataType: "json",
+            // async: true,
+            data: {
+                "name": name,
+                "password": password,
+                "status": 1
+            },
+            success: function(data) {
+                $("#name").text(data.name);
+                // window.location.href='http://localhost:8080/#';
+            },
+            error: function() {
+                $("#loading").hide();
+                alert('密码错误');
+            }
+        })
+         $("#loginOut").click(function(){
+            $.ajax({
+                url: "http://localhost/CodeIgniter/index.php/Blog/loginOut",
+                type: 'POST',
+                dataType: "json",
+                data:{
+                    "name":name,
+                    "status":0
+                },
+                success:function(){
+                    alert("退出成功");
+                    window.location.href ='./login.html';
+                }
+            })
+         });
+</script>
+</body>
+</html>
